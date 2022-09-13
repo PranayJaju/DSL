@@ -32,19 +32,6 @@ void main()
         scanf("%d %lf", &i->rollNo, &i->CGPA);
     }
 
-    //for(i=0; i<n-1; i++)
-    //{
-    //	for(j=0; j<n-1-i; j++)
-    //	{
-    //		if(s[j].rollNo>s[j+1].rollNo)
-    //		{
-    //            temp=s[j];
-    //            s[j]=s[j+1];
-    //            s[j+1]=temp;
-    //		}
-    //	}
-    //}
-
     for(I=0; I<n-1; I++)
     {
     	for(j=s; j<s+(n-1-I); j++)

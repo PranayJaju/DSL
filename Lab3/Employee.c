@@ -29,6 +29,7 @@ void main()
 	{
 	    printf("Enter employee details.\n");
 	    printf("Name: ");
+		if(i==e)
 	    scanf("%c", &x);
 	    fgets(i->name, 50, stdin);
 	    printf("Date of Birth: ");

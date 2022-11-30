@@ -1,13 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"BTStack.h"
-
-//typedef struct btNode
-//{
-//	int data;
-//	struct btNode* left;
-//	struct btNode* right;
-//}btNode;
+#include"BTStackQueue.h"
 
 btNode* create()
 {
@@ -29,12 +22,13 @@ btNode* create()
 
 void Preorder(btNode* root)
 {
+    if(root==NULL) return;
 	btNode* current;
 	Stack* s=(Stack*)malloc(sizeof(Stack));
 	s->top=-1;
     push(s,root);
 
-    while(!isEmpty(s))
+    while(!StackEmpty(s))
     {
     	current=pop(s);
     	printf("%d  ", current->data);
@@ -45,11 +39,12 @@ void Preorder(btNode* root)
 
 void Inorder(btNode* root)
 {
+    if(root==NULL) return;
 	btNode* current=root;
 	Stack* s=(Stack*)malloc(sizeof(Stack));
 	s->top=-1;
 
-	while(!isEmpty(s) || current!=NULL)
+	while(!StackEmpty(s) || current!=NULL)
 	{
 		if(current!=NULL)
 		{
@@ -67,11 +62,48 @@ void Inorder(btNode* root)
 
 void Postorder(btNode* root)
 {
+    if(root==NULL) return;
 	btNode* current=root;
 	Stack* s=(Stack*)malloc(sizeof(Stack));
 	s->top=-1;	
 
-	
+	do
+    {
+        while(root)
+        {
+            if(root->right) push(s,root->right);
+            push(s, root);
+            root=root->left;
+        }
+        root=pop(s);
+        if(root->right && s->stack[s->top]==root->right)
+        {
+            pop(s);
+            push(s,root);
+            root=root->right;
+        }
+        else
+        {
+            printf("%d  ",root->data);
+            root=NULL;
+        }
+    } while (!StackEmpty(s));
+}
+
+void Levelorder(btNode* root)
+{
+    if(root==NULL) return;
+    Queue* q=(Queue*)malloc(sizeof(Queue));
+    q->front=-1; q->rear=-1;
+
+    enqueue(q,root);
+    while(!QueueEmpty(q))
+    {
+        btNode* current=dequeue(q);
+        printf("%d  ", current->data);
+        if(current->left!=NULL) enqueue(q, current->left);
+        if(current->right!=NULL) enqueue(q, current->right);
+    }
 }
 
 int main()
@@ -82,4 +114,8 @@ int main()
 	Preorder(root);
 	printf("\nInorder traversal: ");
 	Inorder(root);
+    printf("\nPostorder traversal: ");
+    Postorder(root);
+    printf("\nLevelorder traversal: ");
+    Levelorder(root);
 }
